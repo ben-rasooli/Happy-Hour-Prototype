@@ -1,65 +1,107 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Project
 {
-   public class CharacterController : MonoBehaviour
-   {
-      #region ------------------------------dependencies
-      [SerializeField] CharacterSettings _settings;
-      [SerializeField] GameObject _hittingBottlePrefab;
-      [SerializeField] GameObject _spillingBottlePrefab;
-      [SerializeField] Collider _collider;
-      Rigidbody _rigidbody;
-      Transform _transform;
-      #endregion
+    public class CharacterController : MonoBehaviour
+    {
+        #region ------------------------------dependencies
+        [SerializeField] CharacterSettings _settings;
+        [SerializeField] GameObject _hittingBottlePrefab;
+        [SerializeField] GameObject _spillingBottlePrefab;
+        [SerializeField] List<Collider> _colliders;
+        Rigidbody _rigidbody;
+        Transform _transform;
+        #endregion
 
-      #region ------------------------------interface
-      public void Move(Vector2 direction)
-      {
-         float speed = _settings.Speed * Time.deltaTime;
-         var velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
-         _rigidbody.velocity = velocity;
+        #region ------------------------------interface
+        public void Move(Vector3 direction)
+        {
+            if (_isStunned)
+                return;
 
-         if (velocity.sqrMagnitude > 0.1)
-            _rigidbody.MoveRotation(Quaternion.LookRotation(velocity, _transform.up));
-      }
+            float speed = _settings.Speed * Time.deltaTime;
+            var velocity = direction * speed;
+            _rigidbody.velocity = velocity;
 
-      public void ThrowBottleStraight(Vector3 direction)
-      {
-         var throwOrigin = _transform.position + _settings.ThrowOffset;
-         var bottle = Instantiate(_hittingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<HittingBottleController>();
-         bottle.SetOwnerCollider(_collider);
-         bottle.Fly(direction);
-      }
+            if (velocity.sqrMagnitude > 0.1)
+                _rigidbody.MoveRotation(Quaternion.LookRotation(velocity, _transform.up));
+        }
 
-      public void ThrowBottleArch(Vector3 direction)
-      {
-         var throwOrigin = _transform.position + _settings.ThrowOffset;
-         var bottle = Instantiate(_spillingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<SpillingBottleController>();
-         bottle.Fly(direction);
-      }
+        public void Aim(Vector3 direction)
+        {
+            if (_isStunned)
+                return;
 
-      public void TakeDamage()
-      {
-         if (_hp > 0)
-            _hp--;
+            if (direction == Vector3.zero)
+                return;
+            
+            _rigidbody.MoveRotation(Quaternion.LookRotation(direction, _transform.up));
+        }
 
-         print(_hp);
-      }
-      int _hp;
-      #endregion
+        public void Throw(Vector3 direction)
+        {
+            if (_isStunned)
+                return;
 
-      #region ------------------------------Unity messages
-      void Awake()
-      {
-         _rigidbody = GetComponent<Rigidbody>();
-         _transform = transform;
-      }
+            var throwOrigin = _transform.position + _settings.ThrowOffset;
+            var bottle = Instantiate(_hittingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<HittingBottleController>();
+            bottle.SetOwnerCollider(_colliders);
+            bottle.Fly(direction);
+        }
 
-      private void Start()
-      {
-         _hp = _settings.InitalHitPoint;
-      }
-      #endregion
-   }
+        public void Toss(Vector3 direction)
+        {
+            if (_isStunned)
+                return;
+
+            var throwOrigin = _transform.position + _settings.ThrowOffset;
+            var bottle = Instantiate(_spillingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<SpillingBottleController>();
+            bottle.Fly(direction);
+        }
+
+        public void TakeDamage()
+        {
+            if (_hp > 0)
+                _hp--;
+
+            print(gameObject.name + ": " + _hp);
+        }
+        int _hp;
+
+        public void TakeHit(Vector3 velocity)
+        {
+            _rigidbody.AddForce(velocity, ForceMode.VelocityChange);
+        }
+
+        public void GetStunned()
+        {
+            _isStunned = true;
+            _rigidbody.velocity = Vector3.zero;
+            Invoke(nameof(removeStunned), _settings.StunDuration);
+        }
+        #endregion
+
+        #region ------------------------------Unity messages
+        void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            _transform = transform;
+        }
+
+        void Start()
+        {
+            _hp = _settings.InitalHitPoint;
+        }
+        #endregion
+
+        #region ------------------------------details
+        bool _isStunned;
+
+        void removeStunned()
+        {
+            _isStunned = false;
+        }
+        #endregion
+    }
 }

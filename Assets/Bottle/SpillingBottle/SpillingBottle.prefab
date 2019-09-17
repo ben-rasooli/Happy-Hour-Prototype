@@ -1016,6 +1016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2db60429ddf45fca23a56083add2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spillPrefab: {fileID: 8792719914812794159, guid: 4aae7cc7026a5dc4eaf10988e2256e8c,
+    type: 3}
   _speed: 1
   _archSize: {x: 4, y: 2}
   _movingCurve:
@@ -1024,30 +1026,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2.747126
-      outSlope: 2.747126
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.13233256
-    - serializedVersion: 3
-      time: 0.26867014
-      value: 0.59665155
-      inSlope: 1.7675306
-      outSlope: 1.7675306
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.04833546
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

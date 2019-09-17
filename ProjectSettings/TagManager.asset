@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Character
+  - KillField
+  - Ground
+  - Floor
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 8295443745500548380}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Character
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,9 +181,10 @@ GameObject:
   - component: {fileID: 8808230722999911557}
   - component: {fileID: 1401996831205090137}
   - component: {fileID: 1134269543009728420}
+  - component: {fileID: 6592049564894162228}
   m_Layer: 0
-  m_Name: Character
-  m_TagString: Untagged
+  m_Name: Model
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9d9f6c6239b4895b451cf555ee3edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: 0
 --- !u!114 &1134269543009728420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,9 +249,26 @@ MonoBehaviour:
   _settings:
     InitalHitPoint: 4
     Speed: 200
+    StunDuration: 2
     ThrowOffset: {x: 0, y: 0.6, z: 0}
   _hittingBottlePrefab: {fileID: 5200215760455025640, guid: 6d7ac73aaef644721b7ddca2d329f2b4,
     type: 3}
   _spillingBottlePrefab: {fileID: 1095672092130984768, guid: 8455c1076df61409fac4e32d557bb176,
     type: 3}
-  _collider: {fileID: 8295443745500548380}
+  _colliders:
+  - {fileID: 8295443745500548380}
+  - {fileID: 6592049564894162228}
+--- !u!136 &6592049564894162228
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295443746422960458}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 1.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
