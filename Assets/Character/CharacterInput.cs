@@ -34,10 +34,10 @@ namespace Project
             _characterController.Aim(_aimingDirection.normalized);
 
             if (XCI.GetButtonDown(XboxButton.RightBumper, controller))
-                _characterController.Throw(_aimingDirection);
+                _characterController.Throw();
 
             if (XCI.GetButtonDown(XboxButton.LeftBumper, controller))
-                _characterController.Toss(_aimingDirection);
+                _characterController.Toss();
         }
         [SerializeField] XboxController controller;
         Vector3 _aimingDirection;

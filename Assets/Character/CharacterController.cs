@@ -35,11 +35,13 @@ namespace Project
 
             if (direction == Vector3.zero)
                 return;
-            
-            _rigidbody.MoveRotation(Quaternion.LookRotation(direction, _transform.up));
+
+            _facing = direction;
+
+            _rigidbody.MoveRotation(Quaternion.LookRotation(_facing, _transform.up));
         }
 
-        public void Throw(Vector3 direction)
+        public void Throw()
         {
             if (_isStunned)
                 return;
@@ -47,17 +49,17 @@ namespace Project
             var throwOrigin = _transform.position + _settings.ThrowOffset;
             var bottle = Instantiate(_hittingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<HittingBottleController>();
             bottle.SetOwnerCollider(_colliders);
-            bottle.Fly(direction);
+            bottle.Fly(_facing);
         }
 
-        public void Toss(Vector3 direction)
+        public void Toss()
         {
             if (_isStunned)
                 return;
 
             var throwOrigin = _transform.position + _settings.ThrowOffset;
             var bottle = Instantiate(_spillingBottlePrefab, throwOrigin, Quaternion.identity).GetComponent<SpillingBottleController>();
-            bottle.Fly(direction);
+            bottle.Fly(_facing);
         }
 
         public void TakeDamage()
@@ -97,6 +99,7 @@ namespace Project
 
         #region ------------------------------details
         bool _isStunned;
+        Vector3 _facing;
 
         void removeStunned()
         {
