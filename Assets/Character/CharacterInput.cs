@@ -7,6 +7,7 @@ namespace Project
     {
         #region ------------------------------dependencies
         CharacterController _characterController;
+        CharacterDrunkController _characterDrunkController;
         Transform _transform;
         #endregion
 
@@ -14,6 +15,7 @@ namespace Project
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _characterDrunkController = GetComponent<CharacterDrunkController>();
             _transform = transform;
         }
 
@@ -26,12 +28,15 @@ namespace Project
         {
             var moveDirection = new Vector3(XCI.GetAxis(XboxAxis.LeftStickX, controller), 0, XCI.GetAxis(XboxAxis.LeftStickY, controller));
             _characterController.Move(moveDirection);
-            
+
             // if a value exists
             if (XCI.GetAxis(XboxAxis.RightStickX, controller) != 0 || XCI.GetAxis(XboxAxis.RightStickY, controller) != 0)
                 _aimingDirection = new Vector3(XCI.GetAxis(XboxAxis.RightStickX, controller), 0, XCI.GetAxis(XboxAxis.RightStickY, controller));
-            
-            _characterController.Aim(_aimingDirection.normalized);
+
+            if (_inaccurate)
+                _characterDrunkController.Aim(_aimingDirection.normalized);
+            else
+                _characterController.Aim(_aimingDirection.normalized);
 
             if (XCI.GetButtonDown(XboxButton.RightBumper, controller))
                 _characterController.Throw();
@@ -44,6 +49,7 @@ namespace Project
         #endregion
 
         #region ------------------------------details
+        [SerializeField] private bool _inaccurate = false;
         #endregion
     }
 }

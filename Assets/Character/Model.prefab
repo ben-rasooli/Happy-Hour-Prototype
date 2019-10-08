@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 8808230722999911557}
   - component: {fileID: 1401996831205090137}
   - component: {fileID: 1134269543009728420}
+  - component: {fileID: 2486105482650758643}
   - component: {fileID: 6592049564894162228}
   m_Layer: 0
   m_Name: Model
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: 0
+  _inaccurate: 0
 --- !u!114 &1134269543009728420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +252,7 @@ MonoBehaviour:
     InitalHitPoint: 4
     Speed: 200
     StunDuration: 2
-    ThrowOffset: {x: 0, y: 0.6, z: 0}
+    ThrowOffset: {x: 0, y: 0.6, z: 0.6}
   _hittingBottlePrefab: {fileID: 5200215760455025640, guid: 6d7ac73aaef644721b7ddca2d329f2b4,
     type: 3}
   _spillingBottlePrefab: {fileID: 1095672092130984768, guid: 8455c1076df61409fac4e32d557bb176,
@@ -258,6 +260,20 @@ MonoBehaviour:
   _colliders:
   - {fileID: 8295443745500548380}
   - {fileID: 6592049564894162228}
+--- !u!114 &2486105482650758643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295443746422960458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f342222ecda771f4b9c5f034f19e47e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxDeviationAmount: 17.88
+  _showCone: 1
 --- !u!136 &6592049564894162228
 CapsuleCollider:
   m_ObjectHideFlags: 0
